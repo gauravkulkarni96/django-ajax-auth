@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form> -->
+  <div id="menu1" class="container tab-pane"><br>
+                                <form class='login-form'>{% csrf_token %}
+                                
+                                        <div class="form-group">
+                                          <label for="exampleInputFname">First Name</label>
+                                          <input required type="text" class="form-control" id="exampleInputFname" aria-describedby="emailHelp" placeholder="First Name">
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="exampleInputLname">Last Name</label>
+                                          <input type="text" class="form-control" id="exampleInputLname" aria-describedby="emailHelp" placeholder="Last Name">
+                                        </div>
+
+                                        <div class="form-group">
+                                        <div id="erroremail" style="color:red">
+                                	
+                                </div>
+                                          <label for="exampleInputEmail">Email address</label>
+                                          <input required type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                                          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                        <div id="errorpass" style="color:red">
+                                	
+                                </div>
+                                          <label for="exampleInputPassword1">Create Password</label>
+                                          <input required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="exampleInputPassword2">Confirm Password</label>
+                                          <input required type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" />
+                                        </div>
+                                        
+                                        <button type="button"  class="btn btn-info btn-lg btn-block login-btn mb-2 mt-2" onclick="signup()">Sign up</button>
+                                        {% csrf_token %}
+
+                                      </form>
+                            </div>
+
+         <script type="text/javascript">
+        function signup(){
+            email = document.getElementById("exampleInputEmail").value;
+            fname = document.getElementById("exampleInputFname").value;
+            lname = document.getElementById("exampleInputLname").value;
+            password1 = document.getElementById("exampleInputPassword1").value;
+            password2 = document.getElementById("exampleInputPassword2").value;
+            csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+            $.ajax({
+            type:"POST",
+            url:'/signup/',
+            data:{
+            	'csrfmiddlewaretoken': csrfmiddlewaretoken,
+              'first_name':fname,
+              'last_name':lname,
+              'email':email,
+              'password1':password1,
+              'password2':password2,
+            },
+            success : function(data){
+                console.log(data['message']);
+                if(data['message'] == "Success"){
+                	window.location = "/"
+                }
+                else{
+                	if("email" in data['message'])
+                		$("#erroremail").html(data['message']['email'][0]);
+                	if("password2" in data['message'])
+                		$("#errorpass").html(data['message']['password2'][0]);
+                }
+                // $("#amount").html(data['amount']);
+                
+            }
+        })
+      }
+    </script>
+{% endblock %}
