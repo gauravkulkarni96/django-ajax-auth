@@ -2,7 +2,7 @@
 
 Django auth by default requires form to be submitted to login and signup URLs. This does not work if we need to have the login signup from a popup/Modal as the errors need to be shown without being redirected. Hence, loogin signup has been implemented on a bootstrap modal using AJAX.
 
-Django auth by default supports login and signup using <b>username</b>. The User class has been overridden to support login and signup using <b>E-mail ID</b>.
+Django auth by default supports login and signup using <b>username</b> as primary key field. The User class has been overridden to support login and signup using <b>E-mail ID</b> as primary key.
 
 # Installation
 1. Copy the following lines to your settings.py file
